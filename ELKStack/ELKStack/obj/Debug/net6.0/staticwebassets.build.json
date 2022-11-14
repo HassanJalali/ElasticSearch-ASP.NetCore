@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "oX4tgGLwqceBDg8tJLqlqJ1lLbp66PiAUDGHAExd/Aw=",
+  "Source": "ELKStack",
+  "BasePath": "_content/ELKStack",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

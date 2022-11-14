@@ -1,0 +1,12 @@
+name: dockercompose11370604981617622821
+services:
+  elkstack:
+    build:
+      context: C:\Users\h.jalali\Desktop\ELKStack\ELKStack
+      dockerfile: ELKStack/Dockerfile
+    image: elkstack
+    networks:
+      default: null
+networks:
+  default:
+    name: dockercompose11370604981617622821_default

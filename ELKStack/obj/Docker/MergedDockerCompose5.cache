@@ -1,0 +1,156 @@
+name: dockercompose11370604981617622821
+services:
+  apm-server:
+    cap_add:
+    - CHOWN
+    - DAC_OVERRIDE
+    - SETGID
+    - SETUID
+    cap_drop:
+    - ALL
+    command:
+    - apm-server
+    - -e
+    - -E
+    - apm-server.rum.enabled=true
+    - -E
+    - apm-server.host=0.0.0.0:8200
+    - -E
+    - setup.kibana.host=kibana:5601
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - --write-out
+      - '''HTTP %{http_code}'''
+      - --silent
+      - --output
+      - /dev/null
+      - http://apm-server:8200/healthcheck
+      interval: 10s
+      retries: 10
+    image: docker.elastic.co/apm/apm-server:7.15.2
+    logging:
+      driver: json-file
+      options:
+        max-file: "5"
+        max-size: 2m
+    networks:
+      default: null
+    ports:
+    - mode: ingress
+      host_ip: 127.0.0.1
+      target: 8200
+      published: "8200"
+      protocol: tcp
+    - mode: ingress
+      host_ip: 127.0.0.1
+      target: 6060
+      published: "6060"
+      protocol: tcp
+  elasticsearch:
+    container_name: elasticsearch
+    environment:
+      ES_JAVA_OPTS: -Xms512m -Xmx512m
+      discovery.type: single-node
+      xpack.monitoring.templates.enabled: null
+      xpack.security.enabled: ' false'
+      xpack.watcher.enabled: "false"
+    image: elasticsearch:8.5.0
+    networks:
+      elastic: null
+    ports:
+    - mode: ingress
+      target: 9200
+      published: "9200"
+      protocol: tcp
+    volumes:
+    - type: volume
+      source: elasticsearch-data
+      target: /usr/share/elasticsearch/data
+      volume: {}
+  elkstack:
+    build:
+      context: C:\Users\h.jalali\Desktop\ELKStack\ELKStack
+      dockerfile: Dockerfile
+      labels:
+        com.microsoft.created-by: visual-studio
+        com.microsoft.visual-studio.project-name: ELKStack
+      target: base
+    container_name: ELKStack
+    entrypoint:
+    - tail
+    - -f
+    - /dev/null
+    environment:
+      ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS: "true"
+      DOTNET_USE_POLLING_FILE_WATCHER: "1"
+      NUGET_FALLBACK_PACKAGES: ""
+    image: elkstack:dev
+    labels:
+      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /root/.nuget/packages  "/app/bin/Debug/net6.0/ELKStack.dll"'
+      com.microsoft.visualstudio.debuggee.killprogram: /bin/sh -c "if PID=$$(pidof
+        dotnet); then kill $$PID; fi"
+      com.microsoft.visualstudio.debuggee.program: dotnet
+      com.microsoft.visualstudio.debuggee.workingdirectory: /app
+    networks:
+      default: null
+    tty: true
+    volumes:
+    - type: bind
+      source: C:\Users\h.jalali\Desktop\ELKStack\ELKStack\ELKStack
+      target: /app
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\h.jalali\Desktop\ELKStack\ELKStack
+      target: /src
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\h.jalali\vsdbg\vs2017u5
+      target: /remote_debugger
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\h.jalali\.nuget\packages\
+      target: /root/.nuget/packages
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\h.jalali\AppData\Roaming/ASP.NET/Https
+      target: /root/.aspnet/https
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\h.jalali\AppData\Roaming/Microsoft/UserSecrets
+      target: /root/.microsoft/usersecrets
+      read_only: true
+      bind:
+        create_host_path: true
+  kibana:
+    container_name: kibana
+    environment:
+      ELASTICSEARCH_URL: http://localhost:9200
+    image: kibana:8.5.0
+    networks:
+      elastic: null
+    ports:
+    - mode: ingress
+      target: 5601
+      published: "5601"
+      protocol: tcp
+networks:
+  default:
+    name: dockercompose11370604981617622821_default
+  elastic:
+    name: dockercompose11370604981617622821_elastic
+    driver: bridge
+volumes:
+  elasticsearch-data:
+    name: dockercompose11370604981617622821_elasticsearch-data

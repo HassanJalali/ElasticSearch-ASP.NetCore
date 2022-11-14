@@ -1,0 +1,78 @@
+name: dockercompose11370604981617622821
+services:
+  apm-server:
+    cap_add:
+    - CHOWN
+    - DAC_OVERRIDE
+    - SETGID
+    - SETUID
+    cap_drop:
+    - ALL
+    command:
+    - apm-server
+    - -e
+    - -E
+    - apm-server.rum.enabled=true
+    - -E
+    - apm-server.host=0.0.0.0:8200
+    - -E
+    - setup.kibana.host=kibana:5601
+    environment:
+      output.elasticsearch.hosts: '["http://elasticsearch:9200"]'
+    image: docker.elastic.co/apm/apm-server:7.15.2
+    logging:
+      driver: json-file
+      options:
+        max-file: "5"
+        max-size: 2m
+    networks:
+      elastic: null
+    ports:
+    - mode: ingress
+      target: 8200
+      published: "8200"
+      protocol: tcp
+    - mode: ingress
+      target: 6060
+      published: "6060"
+      protocol: tcp
+  elasticsearch:
+    container_name: elasticsearch
+    environment:
+      ES_JAVA_OPTS: -Xms512m -Xmx512m
+      discovery.type: single-node
+      xpack.monitoring.templates.enabled: null
+      xpack.security.enabled: ' false'
+      xpack.watcher.enabled: "false"
+    image: elasticsearch:8.5.0
+    networks:
+      elastic: null
+    ports:
+    - mode: ingress
+      target: 9200
+      published: "9200"
+      protocol: tcp
+    volumes:
+    - type: volume
+      source: elasticsearch-data
+      target: /usr/share/elasticsearch/data
+      volume: {}
+  kibana:
+    container_name: kibana
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+    image: kibana:8.5.0
+    networks:
+      elastic: null
+    ports:
+    - mode: ingress
+      target: 5601
+      published: "5601"
+      protocol: tcp
+networks:
+  elastic:
+    name: dockercompose11370604981617622821_elastic
+    driver: bridge
+volumes:
+  elasticsearch-data:
+    name: dockercompose11370604981617622821_elasticsearch-data
