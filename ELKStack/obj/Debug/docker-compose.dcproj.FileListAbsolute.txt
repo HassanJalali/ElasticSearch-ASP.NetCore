@@ -1,0 +1,1 @@
+C:\Users\h.jalali\Desktop\ELK\ElasticSearch-ASP.NetCore\ELKStack\obj\Debug\docker-compose.dcproj.CoreCompileInputs.cache

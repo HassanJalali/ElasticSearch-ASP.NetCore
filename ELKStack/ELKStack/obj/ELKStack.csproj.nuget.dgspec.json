@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\h.jalali\\Desktop\\ELKStack\\ELKStack\\ELKStack\\ELKStack.csproj": {}
+    "C:\\Users\\h.jalali\\Desktop\\ELK\\ElasticSearch-ASP.NetCore\\ELKStack\\ELKStack\\ELKStack.csproj": {}
   },
   "projects": {
-    "C:\\Users\\h.jalali\\Desktop\\ELKStack\\ELKStack\\ELKStack\\ELKStack.csproj": {
+    "C:\\Users\\h.jalali\\Desktop\\ELK\\ElasticSearch-ASP.NetCore\\ELKStack\\ELKStack\\ELKStack.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\h.jalali\\Desktop\\ELKStack\\ELKStack\\ELKStack\\ELKStack.csproj",
+        "projectUniqueName": "C:\\Users\\h.jalali\\Desktop\\ELK\\ElasticSearch-ASP.NetCore\\ELKStack\\ELKStack\\ELKStack.csproj",
         "projectName": "ELKStack",
-        "projectPath": "C:\\Users\\h.jalali\\Desktop\\ELKStack\\ELKStack\\ELKStack\\ELKStack.csproj",
+        "projectPath": "C:\\Users\\h.jalali\\Desktop\\ELK\\ElasticSearch-ASP.NetCore\\ELKStack\\ELKStack\\ELKStack.csproj",
         "packagesPath": "C:\\Users\\h.jalali\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\h.jalali\\Desktop\\ELKStack\\ELKStack\\ELKStack\\obj\\",
+        "outputPath": "C:\\Users\\h.jalali\\Desktop\\ELK\\ElasticSearch-ASP.NetCore\\ELKStack\\ELKStack\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\h.jalali\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -40,6 +40,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Elastic.CommonSchema.Serilog": {
+              "target": "Package",
+              "version": "[1.5.3, )"
+            },
             "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": {
               "target": "Package",
               "version": "[1.17.0, )"
@@ -48,6 +52,10 @@
               "target": "Package",
               "version": "[6.0.1, )"
             },
+            "Serilog.Enrichers.CorrelationId": {
+              "target": "Package",
+              "version": "[3.0.1, )"
+            },
             "Serilog.Enrichers.Environment": {
               "target": "Package",
               "version": "[2.2.0, )"
@@ -55,6 +63,10 @@
             "Serilog.Exceptions": {
               "target": "Package",
               "version": "[8.4.0, )"
+            },
+            "Serilog.Sinks.Async": {
+              "target": "Package",
+              "version": "[1.5.0, )"
             },
             "Serilog.Sinks.Debug": {
               "target": "Package",
